@@ -15,8 +15,8 @@ import { LocalAuthGuard } from './guard/local-auth.guard';
 @Controller('auth')
 export class AuthController {
   constructor(
-    private authService: AuthService,
-    private userService: UserService,
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
