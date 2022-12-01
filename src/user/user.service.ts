@@ -7,7 +7,9 @@ import * as argon2 from 'argon2';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectRepository(User) private userRepository: UserRepository) {}
+  constructor(
+    @InjectRepository(User) private readonly userRepository: UserRepository,
+  ) {}
 
   async findByUsername(username: string): Promise<undefined | User> {
     return this.userRepository.findOne({ where: { username } });
