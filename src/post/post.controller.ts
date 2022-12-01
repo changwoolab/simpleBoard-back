@@ -7,11 +7,9 @@ import {
   Post,
   UseGuards,
   Delete,
-  ForbiddenException,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { PagingDto } from 'src/common/paging.dto';
-import { UserService } from 'src/user/user.service';
 import { UserId } from 'src/utils/userId.decorator';
 import { PostInput } from './dto/post.input';
 import { PostEntity } from './post.entity';
@@ -19,10 +17,7 @@ import { PostService } from './post.service';
 
 @Controller('post')
 export class PostController {
-  constructor(
-    private readonly postService: PostService,
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly postService: PostService) {}
 
   @Get('/')
   async getPostList(@Body() pagingDto: PagingDto): Promise<PostEntity[]> {
