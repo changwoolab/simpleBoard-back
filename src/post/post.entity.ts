@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-@Entity()
-export class Post extends BaseEntity {
+@Entity('post')
+export class PostEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 

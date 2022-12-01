@@ -1,4 +1,4 @@
-import { Post } from 'src/post/post.entity';
+import { PostEntity } from 'src/post/post.entity';
 import {
   BaseEntity,
   Column,
@@ -21,6 +21,6 @@ export class User extends BaseEntity {
   @Column()
   name!: string;
 
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post[];
+  @OneToMany(() => PostEntity, (post) => post.user)
+  posts: PostEntity[];
 }
