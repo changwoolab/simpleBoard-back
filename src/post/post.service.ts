@@ -11,11 +11,15 @@ export class PostService {
     private readonly postRepository: PostRepository,
   ) {}
 
-  getPostList(pagingDto: PagingDto): Promise<PostEntity[]> {
+  async getPostList(pagingDto: PagingDto): Promise<PostEntity[]> {
     const { page, count } = pagingDto;
     const realPage = Math.max(1, page) - 1; // 최소 1페이지
     const realCount = Math.max(10, count); // 최소 10페이지
 
     return this.postRepository.getPosts(realPage * realCount, realCount);
+  }
+
+  async getPostDetail(id: number): Promise<PostEntity> {
+    return this.postRepository.findOne({ where: { id } });
   }
 }
