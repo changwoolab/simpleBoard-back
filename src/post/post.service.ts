@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PagingDto } from 'src/common/paging.dto';
+import { PostInput } from './dto/post.input';
 import { PostEntity } from './post.entity';
 import { PostRepository } from './post.repository';
 
@@ -21,5 +22,9 @@ export class PostService {
 
   async getPostDetail(id: number): Promise<PostEntity> {
     return this.postRepository.findOne({ where: { id } });
+  }
+
+  async writePost(input: PostInput, userId: number): Promise<void> {
+    await this.postRepository.save({ ...input, userId });
   }
 }
