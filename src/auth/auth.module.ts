@@ -8,7 +8,13 @@ import { LocalStrategy } from './strategy/local.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 
 @Module({
-  imports: [UserModule, PassportModule, JwtModule],
+  imports: [
+    UserModule,
+    PassportModule,
+    JwtModule.register({
+      secret: 'ASDFASDFASDFASDFASDF', // process.env.JWTSECRET 와 같이 실제로는 환경 변수를 사용해주세요.
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   exports: [AuthService],
