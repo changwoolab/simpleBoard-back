@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   UseGuards,
+  Delete,
   ForbiddenException,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
@@ -49,9 +50,19 @@ export class PostController {
     @UserId() userId: number,
     @Body() updatePostInput: PostInput,
   ): Promise<void> {
-    const post = await this.postService.getOnePost(postId);
-    if (post.userId != userId) throw new ForbiddenException();
+    await this.postService.validateIfUserWriterOfPost(postId, userId);
 
     await this.postService.updatePost(postId, updatePostInput);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:id')
+  async deletePost(
+    @Param('id') postId: number,
+    @UserId() userId: number,
+  ): Promise<void> {
+    await this.postService.validateIfUserWriterOfPost(postId, userId);
+
+    await this.postService.deletePost(postId);
   }
 }

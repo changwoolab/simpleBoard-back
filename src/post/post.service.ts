@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PagingDto } from 'src/common/paging.dto';
 import { PostInput } from './dto/post.input';
@@ -30,5 +30,17 @@ export class PostService {
 
   async updatePost(postId: number, updatePostInput: PostInput): Promise<void> {
     await this.postRepository.update(postId, { ...updatePostInput });
+  }
+
+  async validateIfUserWriterOfPost(
+    postId: number,
+    userId: number,
+  ): Promise<void> {
+    const post = await this.getOnePost(postId);
+    if (post.userId != userId) throw new ForbiddenException();
+  }
+
+  async deletePost(postId: number): Promise<void> {
+    await this.postRepository.delete(postId);
   }
 }
