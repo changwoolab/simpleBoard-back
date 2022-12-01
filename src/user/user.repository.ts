@@ -1,4 +1,6 @@
-import { Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
 import { User } from './user.entity';
 
-export class UserRepository extends Repository<User> {}
+export interface UserRepository extends Repository<User> {}
+
+export const UserRepositoryMethods: Pick<UserRepository, null> = {};
