@@ -20,11 +20,15 @@ export class PostService {
     return this.postRepository.getPosts(realPage * realCount, realCount);
   }
 
-  async getPostDetail(id: number): Promise<PostEntity> {
+  async getOnePost(id: number): Promise<PostEntity> {
     return this.postRepository.findOne({ where: { id } });
   }
 
   async writePost(input: PostInput, userId: number): Promise<void> {
     await this.postRepository.save({ ...input, userId });
+  }
+
+  async updatePost(postId: number, updatePostInput: PostInput): Promise<void> {
+    await this.postRepository.update(postId, { ...updatePostInput });
   }
 }
